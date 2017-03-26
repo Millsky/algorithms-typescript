@@ -12,13 +12,24 @@ class Point {
     }
 }
 
-function NearestNeighbor(P: Array<Point>) {
-    var initialPoint = P[0];
-    /* POP FIRST ITEM OUT */
-    P = removeItemAtIndex(0, P);
-    findNextPoint(initialPoint, P);
+var path = [];
+var distances = [];
+var index = -1;
 
+function NearestNeighbor(P: Array<Point>,point:Point) {
+    /* POP FIRST ITEM OUT */
+    if(path.length == 0){
+        addToPath(P[0]);
+        distances.push(0);
+        removeItemAtIndex(0,P);
+
+    }
+
+    while(P.length > 0){
+        P = findNextPoint(path[index],P);
+    }
 }
+
 
 
 function initArrayPoints() {
@@ -46,9 +57,18 @@ function findNextPoint(p1: Point, P: Array<Point>) {
         a.distance > b.distance;
     });
     /* GET POINT IT BELONGS TO */
-    return smallest[0];
+    addToPath(smallest[0]);
+    distances.push(smallest[0].distance);
+    removeItemAtIndex(0,smallest);
+    return smallest;
+}
+
+function addToPath(p:Point){
+    path.push(p);
+    index++;
 }
 
 function removeItemAtIndex(index: number, A: Array<any>) {
     return A.splice(index, 1);
 }
+
