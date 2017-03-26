@@ -1,145 +1,113 @@
+/**
+ * Created by millsky on 3/26/17.
+ */
 /* BST - Node class */
 class node {
     value: any
     left: any
     right: any
+    parent: node
     /* Store height to reduce run time */
     height: number
-    /* Function to compute the balance factor which we will use later */
     balanceFactor() {
-        var bf = (this.right.height) - (this.left.height);
-
+        /* BalanceFactor(N) := –Height(LeftSubtree(N)) + Height(RightSubtree(N)) */
+        var rightHeight = this.getHeight(this.right) || 0;
+        var leftHeight =  this.getHeight(this.left) || 0;
+        return (-1 * leftHeight) + (rightHeight);
+    }
+    isOffBalance(){
+        if(this.balanceFactor() > 1 || this.balanceFactor() < -1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    /* Recursive height calculation - need to find way to store this information */
+    getHeight(node:node) {
+        if (node == null){
+            return -1;
+        }else{
+            return 1 + Math.max(this.getHeight(node.left), this.getHeight(node.right));
+        }
     }
 
     constructor(v, h) {
         this.value = v;
         this.height = h;
+        this.right = null;
+        this.left = null;
     }
 }
+function rotateLeft(treeNode: node) {
 
-/* BST - Main class */
-class bst {
+    let Pivot = treeNode.right;
 
+    treeNode.right = Pivot.left;
 
-    rotationTest() {
-        /* TEST VALUES FOR ROTATION */
-        var b = new bst();
-        b.addValue(10);
-        b.addValue(3);
-        b.addValue(11);
-        b.addValue(12);
-        b.addValue(15);
-        return b.rotateLeft(b.root);
-    }
+    Pivot.left = treeNode;
 
-    updateLinkedNodeHeights(treeNode: node, delta: number) {
-        var currentNode = treeNode;
-        console.log("Updating height of:");
-        console.log(treeNode);
+    //Pivot.left = this.updateLinkedNodeHeights(Pivot.left, 1);
 
-        currentNode.height = currentNode.height + delta;
+    treeNode = Pivot;
 
-        /* Set current Node update both right and left heights */
-        /* if left set current node to left repeat */
-        /* if right set current node to right repeat */
+    //treeNode.right = this.updateLinkedNodeHeights(treeNode.right, -1);
 
+    //treeNode.height = treeNode.height - 1;
 
-        if (currentNode.left) {
-            console.log("Recursing Left");
-            //currentNode.left.height = currentNode.left.height + delta;
-            let tempNode = currentNode;
-            currentNode.left = this.updateLinkedNodeHeights(tempNode.left, delta);
-        }
-        if (currentNode.right) {
-            console.log("Recursing Right");
-            //currentNode.right.height = currentNode.right.height + delta;
-            let tempNode = currentNode;
-            currentNode.right = this.updateLinkedNodeHeights(tempNode.right, delta);
-        }
+    return treeNode;
+}
+function rotateRight(treeNode: node) {
+    let Pivot = treeNode.left;
 
+    treeNode.left = Pivot.right;
 
-        return currentNode;
-    }
+    Pivot.right = treeNode;
 
-    /* Rotation is basically copying existing nodes and inserting them */
-    rotateLeft(treeNode: node) {
+    //Pivot.right = this.updateLinkedNodeHeights(Pivot.right, 1);
 
-        let Pivot = treeNode.right;
+    treeNode = Pivot;
 
-        treeNode.right = Pivot.left;
+    //treeNode.left = this.updateLinkedNodeHeights(treeNode.left, -1);
 
-        Pivot.left = treeNode;
+    treeNode.height = treeNode.height - 1;
 
-        Pivot.left = this.updateLinkedNodeHeights(Pivot.left, 1);
-
-        treeNode = Pivot;
-
-        treeNode.right = this.updateLinkedNodeHeights(treeNode.right, -1);
-
-        treeNode.height = treeNode.height - 1;
-
-        return treeNode;
-    }
-
-    rotateRight(treeNode: node) {
-        let Pivot = treeNode.left;
-
-        treeNode.left = Pivot.right;
-
-        Pivot.right = treeNode;
-
-        Pivot.right = this.updateLinkedNodeHeights(Pivot.right, 1);
-
-        treeNode = Pivot;
-
-        treeNode.left = this.updateLinkedNodeHeights(treeNode.left, -1);
-
-        treeNode.height = treeNode.height - 1;
-
-        return treeNode;
-    }
-
-    root: node
-
-    addValue(v) {
-
-        /* IF ROOT NOT INIT ADD IT */
-
-        if (!this.root) {
-            this.root = new node(v, 0);
-            return;
-        }
-
-        var currentNode = this.root;
-        var height = 0;
-
-        while (currentNode) {
-            /* We want to store the height as we add so we can more easily compute the balance factor */
-            height++;
-            /* If less go left */
-            if (v < currentNode.value) {
-                if (!currentNode.left) {
-                    currentNode.left = new node(v, height);
-                    break;
-                } else {
-                    currentNode = currentNode.left;
-                }
-            } else {
-                /* If more go right */
-                if (!currentNode.right) {
-                    currentNode.right = new node(v, height);
-                    break;
-                } else {
-                    currentNode = currentNode.right;
-                }
+    return treeNode;
+}
+function balance(treeNode:node){
+    if (treeNode.isOffBalance()) {
+        console.log("NODE IS OFF BALANCE");
+        if(treeNode.balanceFactor() > 1){
+            console.log("Right Off Balance - rotate left ");
+            if(treeNode.right.balanceFactor() < 0){
+                treeNode.right = rotateRight(treeNode.right);
             }
-            /* If node has value we want to continue to check it's children so we
-             recursively perform operation on the left or rightmost node*/
+            return rotateLeft(treeNode);
         }
+        if(treeNode.balanceFactor() < -1){
+            console.log("Left Off Balance - rotate right");
+            if(treeNode.left.balanceFactor() > 0){
+                treeNode.left = rotateRight(treeNode.left);
+            }
+            return rotateRight(treeNode);
+        }
+    }else{
+        return treeNode;
+    }
+}
+function insert(treeRoot:node,v:number) {
 
+    /* IF ROOT NOT INIT ADD IT */
+
+    if (!treeRoot) {
+        return new node(v, 0);
     }
 
-}
+    if(v < treeRoot.left){
+        treeRoot.left = insert(treeRoot.left,v)
+    }else{
+        treeRoot.right = insert(treeRoot.right,v)
+    }
 
-var m = new bst();
-m.root = m.rotationTest();
+    /* Always return balance */
+    return balance(treeRoot);
+};
