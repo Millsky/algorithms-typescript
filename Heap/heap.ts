@@ -24,7 +24,16 @@ class heap{
     /* Ccmputations for calculating parent and child relationships */
 
     getParentIndex(i:number){
-        return (i-2)/2;
+        if(i >= 2 && i%2 == 0) {
+            return (i - 2) / 2;
+        }else{
+            if(i%2 != 0){
+                return (i -1) /2;
+            }
+            if(i<2){
+                return 0;
+            }
+        }
     }
 
     getChildLeftIndex(i:number){
@@ -67,21 +76,24 @@ class heap{
             this.length++;
             return;
         }
-        /* DOES THE VALUE SATISFY OUR MIN HEAP PROPERTY */
-        if(v > this.heap[this.length -1]){
-            this.heap.push(v);
-            this.length++;
-        }else{
-            this.balanceTraverseUp();
-        }
+        this.heap.push(v);
+        this.length++;
+        this.balanceTraverseUp();
     }
 
     balanceTraverseUp(){
+        console.log("BALANCEING");
         /* Start @ last index and traverse up */
         var traverseStart = this.length - 1;
         /* While has parent to swap with and the v < parent value */
-        while(this.hasParent(traverseStart) &&  this.heap[traverseStart] < this.heap[this.getParentIndex(traverseStart)]){
+        console.log(this.hasParent(traverseStart));
+        console.log(this.heap[traverseStart] > this.heap[this.getParentIndex(traverseStart)]);
+        console.log(this.heap[traverseStart]);
+        console.log(this.heap[this.getParentIndex(traverseStart)]);
+
+        while(this.hasParent(traverseStart) && this.heap[traverseStart] < this.heap[this.getParentIndex(traverseStart)]){
             /* Swap with parent */
+            console.log("SWAPING POS:" + this.getParentIndex(traverseStart) + " " +"with:" + traverseStart);
             this.swap(this.getParentIndex(traverseStart),traverseStart);
             /* make current index parent index */
             traverseStart = this.getParentIndex(traverseStart);
