@@ -81,26 +81,68 @@ class heap{
         this.balanceTraverseUp();
     }
 
+    delete(){
+        /* Swap last and first element */
+        this.swap(0,this.length -1);
+        /* Delete the last Element */
+        this.heap.pop();
+        this.length--;
+        this.balanceTraverseDown();
+    }
+
     balanceTraverseUp(){
-        console.log("BALANCEING");
         /* Start @ last index and traverse up */
         var traverseStart = this.length - 1;
         /* While has parent to swap with and the v < parent value */
-        console.log(this.hasParent(traverseStart));
-        console.log(this.heap[traverseStart] > this.heap[this.getParentIndex(traverseStart)]);
-        console.log(this.heap[traverseStart]);
-        console.log(this.heap[this.getParentIndex(traverseStart)]);
-
         while(this.hasParent(traverseStart) && this.heap[traverseStart] < this.heap[this.getParentIndex(traverseStart)]){
             /* Swap with parent */
-            console.log("SWAPING POS:" + this.getParentIndex(traverseStart) + " " +"with:" + traverseStart);
             this.swap(this.getParentIndex(traverseStart),traverseStart);
             /* make current index parent index */
             traverseStart = this.getParentIndex(traverseStart);
         }
     }
 
+    /* Use this case when removing an element */
     balanceTraverseDown(){
+        /* If the heap has one item || no items no need to perform the operation  */
+        if(this.length == 0 || this.length == 1){
+            return;
+        }
+        /* start at the largest value which is now @ index 0*/
+        var traverseStart = 0;
+        while(true){
+            var currentValue = this.heap[traverseStart];
+            var lv = null;
+            var rv = null;
+            /* Get the left and right values */
+            if(this.hasLeft(traverseStart)){
+
+                lv = this.heap[this.getChildLeftIndex(traverseStart)];
+            }
+            if(this.hasRight(traverseStart)){
+                rv = this.heap[this.getChildRightIndex(traverseStart)];
+            }
+
+            if(lv == null && rv == null){
+                /* DOES NOT HAVE LEFT OR RIGHT BREAK */
+                break;
+            }
+
+            /* Pick the smaller of the two and swap*/
+            if(lv < currentValue || rv < currentValue) {
+                if (lv < rv) {
+                    /* SWAP CURRENT WITH LEFT */
+                    this.swap(traverseStart, this.getChildLeftIndex(traverseStart));
+                    traverseStart = this.getChildLeftIndex(traverseStart);
+                } else {
+                    /* SWAP CURRENT WITH RIGHT */
+                    this.swap(traverseStart, this.getChildRightIndex(traverseStart));
+                    traverseStart = this.getChildRightIndex(traverseStart);
+                }
+            }else{
+                break;
+            }
+        }
 
     }
 
