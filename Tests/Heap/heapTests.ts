@@ -6,6 +6,13 @@ import {should,expect,assert} from "chai";
 import heap from '../../Heap/heap';
 
 describe('Heap',function () {
+
+    it('Should have the properties length and heap',function () {
+        let h = new heap();
+        assert.property(h,'length');
+        assert.property(h,'heap');
+    });
+
     describe('#length',function () {
        let h = new heap();
        it('Should return 0 when instantiated',function () {
@@ -16,11 +23,43 @@ describe('Heap',function () {
            assert.equal(h.length,1);
         });
     });
+
     describe('#insert()',function () {
         let h = new heap();
         it('Should add the given value to the heap',function () {
             h.insert(62);
             assert.equal(h.heap.indexOf(62) >= 0,true);
         });
+        it('Should Always Keep Smallest Value at Index 0',function () {
+            h.insert(62);
+            h.insert(68);
+            h.insert(2);
+            h.insert(20);
+            h.insert(3);
+            h.insert(1);
+            h.insert(80);
+            assert.equal(h.heap.indexOf(1),0);
+        });
     });
+
+    describe('#swap()',function () {
+        it('Should swap first and last item',function(){
+            let h = new heap();
+            h.insert(10);
+            h.insert(20);
+            h.insert(30);
+
+            h.swap(0,2);
+
+            let firstItem = h.heap[0];
+            let lastItem  = h.heap[h.length -1];
+
+            assert.equal(firstItem,30);
+            assert.equal(lastItem,10);
+
+        });
+    });
+
+
 });
+
