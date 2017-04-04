@@ -151,3 +151,5 @@ class heap{
         this.length = 0;
     }
 }
+
+export default heap;

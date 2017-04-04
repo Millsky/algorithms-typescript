@@ -1,0 +1,32 @@
+{
+  "name": "algorithms-typescript",
+  "version": "0.0.1",
+  "description": "A collection of typescript algorithms ",
+  "main": "tests.js",
+  "scripts": {
+    "dev-test-watch": "mocha-typescript-watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Millsky/algorithms-typescript.git"
+  },
+  "keywords": [
+    "Algorithms",
+    "Heap",
+    "Treap"
+  ],
+  "author": "millsky",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Millsky/algorithms-typescript/issues"
+  },
+  "homepage": "https://github.com/Millsky/algorithms-typescript#readme",
+  "devDependencies": {
+    "assert": "^1.4.1",
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "mocha-typescript": "^1.0.23",
+    "ts-node": "^3.0.2",
+    "typescript": "^2.2.2"
+  }
+}
