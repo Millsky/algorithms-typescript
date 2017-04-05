@@ -61,5 +61,21 @@ describe('Heap',function () {
     });
 
 
+    describe('#getParentIndex(i)',function () {
+        let h = new heap();
+        /* TODO: ADD LOGIC HERE */
+        it('Should return an error when the length is 0',function () {
+
+        });
+
+        it('Should return 0 when the length is < 3 && > 0',function () {
+
+        });
+
+        it('Should return 1 when i is between 3 and 4',function () {
+
+        });
+    });
+
 });
 
