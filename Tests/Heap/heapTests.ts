@@ -60,22 +60,34 @@ describe('Heap',function () {
         });
     });
 
-
     describe('#getParentIndex(i)',function () {
-        let h = new heap();
         /* TODO: ADD LOGIC HERE */
-        it('Should return an error when the length is 0',function () {
-
-        });
-
         it('Should return 0 when the length is < 3 && > 0',function () {
-
+            let h = new heap();
+            h.insert(1);
+            h.insert(2);
+            assert.equal(h.getParentIndex(1),0);
         });
 
         it('Should return 1 when i is between 3 and 4',function () {
-
+            let h = new heap();
+            h.insert(1);
+            h.insert(2);
+            h.insert(3);
+            h.insert(4);
+            assert.equal(h.getParentIndex(3),1);
         });
     });
 
+    describe('#delete()',function () {
+        it('Should remove the first item from the heap',function () {
+           let h = new heap();
+           h.insert(1);
+           h.insert(2);
+           h.insert(3);
+           h.delete();
+           assert.equal(h.heap[0],2);
+        });
+    });
 });
 

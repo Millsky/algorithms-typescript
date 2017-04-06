@@ -83,7 +83,7 @@ class heap{
 
     delete(){
         /* Swap last and first element */
-        this.swap(0,this.length -1);
+        this.swap(0,this.length - 1);
         /* Delete the last Element */
         this.heap.pop();
         this.length--;
@@ -115,8 +115,8 @@ class heap{
             var lv = null;
             var rv = null;
             /* Get the left and right values */
-            if(this.hasLeft(traverseStart)){
 
+            if(this.hasLeft(traverseStart)){
                 lv = this.heap[this.getChildLeftIndex(traverseStart)];
             }
             if(this.hasRight(traverseStart)){
@@ -130,12 +130,14 @@ class heap{
 
             /* Pick the smaller of the two and swap*/
             if(lv < currentValue || rv < currentValue) {
+                if(rv == null){
+                    rv = Infinity;
+                }
                 if (lv < rv) {
                     /* SWAP CURRENT WITH LEFT */
                     this.swap(traverseStart, this.getChildLeftIndex(traverseStart));
                     traverseStart = this.getChildLeftIndex(traverseStart);
-                } else {
-                    /* SWAP CURRENT WITH RIGHT */
+                }else{
                     this.swap(traverseStart, this.getChildRightIndex(traverseStart));
                     traverseStart = this.getChildRightIndex(traverseStart);
                 }
