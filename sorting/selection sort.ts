@@ -18,10 +18,11 @@ function selectionSort(A){
         /* Smallest */
        var temp1 = A[index];
        var temp2 = A[j];
-
        A[j] = temp1;
        A[index] = temp2;
 
     }
     return A;
 }
+
+export default selectionSort;

@@ -4,7 +4,8 @@
   "description": "A collection of typescript algorithms ",
   "main": "tests.js",
   "scripts": {
-    "dev-test-watch": "mocha-typescript-watch"
+    "dev-test-watch": "mocha-typescript-watch",
+    "test": "mocha --compilers ts:ts-node/register,tsx:ts-node/register 'Tests/**/*.ts'"
   },
   "repository": {
     "type": "git",
