@@ -4,7 +4,7 @@ Collection of various algorithms
 
 ## Binary Search Tree 
 
-###Methods
+### Methods
 
 - [x] Insert
 - [ ] Delete
@@ -19,36 +19,36 @@ Collection of various algorithms
 
 ### Closest Pair
 
-##Heap (min-heap)
+## Heap (min-heap)
 
-###Methods
+### Methods
 
 - [x] Insert
 - [x] Delete
 - [x] Find minimum
 
-##Quick Sort 
+## Quick Sort 
 
-###Methods
-
-- [x] Sort
-
-##Selection Sort 
-
-###Methods
+### Methods
 
 - [x] Sort
 
-##Linked List 
+## Selection Sort 
 
-###Methods
+### Methods
+
+- [x] Sort
+
+## Linked List 
+
+### Methods
 
 - [x] Add
 - [ ] Delete
 
-##Double Linked List
+## Double Linked List
 
-###Methods
+### Methods
 
 - [x] Add
 - [x] Delete
