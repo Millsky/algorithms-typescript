@@ -27,11 +27,21 @@ Collection of various algorithms
 - [x] Delete
 - [x] Find minimum
 
+### Tests
+
+- [x] Insert 💯
+- [x] Delete 💯
+- [ ] Find minimum 
+
 ## Quick Sort 
 
 ### Methods
 
 - [x] Sort
+
+### Tests
+
+- [x] Sort 💯
 
 ## Selection Sort 
 
