@@ -6,8 +6,6 @@ Collection of various algorithms
 
 ###Methods
 
------------
-
 - [x] Insert
 - [ ] Delete
 - [x] Rotate Right 
@@ -25,8 +23,6 @@ Collection of various algorithms
 
 ###Methods
 
------------
-
 - [x] Insert
 - [x] Delete
 - [x] Find minimum
@@ -35,15 +31,11 @@ Collection of various algorithms
 
 ###Methods
 
------------
-
 - [x] Sort
 
 ##Selection Sort 
 
 ###Methods
-
------------
 
 - [x] Sort
 
@@ -51,17 +43,12 @@ Collection of various algorithms
 
 ###Methods
 
------------
-
 - [x] Add
 - [ ] Delete
-
 
 ##Double Linked List
 
 ###Methods
-
------------
 
 - [x] Add
 - [x] Delete
