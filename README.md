@@ -29,16 +29,19 @@ Collection of various algorithms
 
 ### Tests
 
-- [:shipit:] Insert
-- [x] Delete
-- [x] Find minimum
-
+- [x] Insert 💯
+- [x] Delete 💯
+- [ ] Find minimum 
 
 ## Quick Sort 
 
 ### Methods
 
 - [x] Sort
+
+### Tests
+
+- [x] Sort 💯
 
 ## Selection Sort 
 
