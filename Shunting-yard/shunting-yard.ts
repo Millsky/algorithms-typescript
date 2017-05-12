@@ -9,15 +9,28 @@ function tokenize(stringExpression) {
 }
 
 /* Utility to Check if token is valid */
-var tokens = ["+","-","*","/"];
+var tokens = ["(",")","^","+","-","*","/"];
 
 /* utility to map priorities P|E|MD|AS */
 var tokenPriority = {
-    "+":1,
-    "-":1,
+    "(":0,
+    ")":0,
+    "+":3,
+    "-":3,
     "*":2,
-    "/":2
+    "/":2,
+    "^":1
 };
+
+/* Token associative - Used for associative mapping Left == L Right == R*/
+var tokenAssociative = {
+    "+":"L",
+    "-":"L",
+    "*":"L",
+    "/":"L",
+    "^":"R"
+}
+
 /* utility to map functions */
 var tokenFunction = {
     "+": function (a,b) {
@@ -55,33 +68,63 @@ function convertToPostFix(stringExporession) {
     var tokenizedExpression = tokenize(stringExporession);
     /* Init an empty stack*/
     var output = [];
-    /* We can follow the impl on wiki less the parens */
     for(var i=0;i<tokenizedExpression.length;i++){
+
         var currentToken = tokenizedExpression[i];
         if(isNumber(currentToken)){
             output.push(currentToken);
         }else{
             if(isValidToken(currentToken)){
-                output.push(" ");
-                var currentPriority = tokenPriority[currentToken];
-                var index = ops.length;
-                /* Iterate backwards to push out old ops with a lower priority */
-                while(index--){
-                    var currentOp =  ops[index];
-                    var opsPriority = tokenPriority[currentOp];
-                    if(opsPriority >= currentPriority){
-                        var item = ops.splice(index,1);
-                        output.push(item[0]);
-                        output.push(" ");
+                if(currentToken == "(" || currentToken == ")"){
+                    /* If the token is a left parenthesis (i.e. "("), then push it onto the stack. */
+                    if(currentToken == "("){
+                        ops.push(currentToken);
+                    }else {
+                        /* Until the token at the top of the stack is a left parenthesis,
+                        pop operators off the stack onto the output queue.*/
+                        var index = ops.length;
+                        while (index--) {
+                            var currentOp = ops[index];
+                            if(currentOp != "("){
+                                var item = ops.splice(index, 1);
+                                output.push(item[0]);
+                                output.push(" ");
+                            }else {
+                                /* Pop the left parenthesis from the stack, but not onto the output queue.*/
+                                ops.splice(index, 1);
+                                break;
+                            }
+                        }
                     }
-
+                }else {
+                    output.push(" ");
+                    var currentPriority = tokenPriority[currentToken];
+                    var index = ops.length;
+                    /* Iterate backwards to push out old ops with a lower priority */
+                    while (index--) {
+                        var currentOp = ops[index];
+                        var opsPriority = tokenPriority[currentOp];
+                        var associativeProp = tokenAssociative[currentToken];
+                        if (opsPriority <= currentPriority && currentOp != "(" && currentOp != ")") {
+                            /* Take associativity into account  */
+                            if(associativeProp == "L" || (associativeProp == "R" && opsPriority < currentPriority)){
+                                var item = ops.splice(index, 1);
+                                output.push(item[0]);
+                                output.push(" ");
+                            }
+                        }else{
+                            break;
+                        }
+                    }
+                    ops.push(currentToken);
                 }
-                ops.push(currentToken);
+
+
             }
         }
     }
 
-    /* There could be some left over ops whos priorities did not
+    /* There could be some left over ops who's priorities did not
      pop b/c they did not meet the priority criteria*/
 
     if(ops.length > 0){
@@ -90,6 +133,7 @@ function convertToPostFix(stringExporession) {
             output.push(ops[i]);
         }
     }
+
     return output;
 }
 
